@@ -11,7 +11,7 @@
     key: "{{jenkins.gpg_key}}"
 
 - name: Install Jenkins in ec2 instance
-  yum:
+  apt:
     name: jenkins
     state: present
 
