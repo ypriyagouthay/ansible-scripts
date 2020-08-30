@@ -1,27 +1,9 @@
 ---
-- name: Update all Ubuntu packages
+  
+- name: Automatically select the Oracle License
+  shell: echo debconf shared/accepted-oracle-license-v1-1 select true | sudo debconf-set-selections
+  changed_when: false
+
+- name: Install Oracle Java
+  apt: pkg={{ jdk_version }} update-cache=yes state=latest
   sudo: yes
-  apt:
-    upgrade: "dist"
-  when: ansible_distribution == 'Ubuntu'
-
-- name: Install required Ubuntu packages
-  sudo: yes
-  apt:
-    name: "{{ packages }}"
-    state: present
-  vars:
-    packages:
-      - openjdk-8-jdk
-
-- name: Install Java 8 in EC2 instance.
-  apt:
-    name: "{{java.VERSION}}"
-    state: present
-  become: true
-
-- name: Correct the alternatives to change default Java version.
-  alternatives:
-    name: java
-    link: /bin/java
-    path: "{{java.ALTERNATIVES}}"
