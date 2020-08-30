@@ -1,3 +1,10 @@
+---
+
+- name: Download Jenkins repo yum URL for
+  get_url:
+    url: "{{jenkins.repo_URL}}"
+    dest: /etc/yum.repos.d/jenkins.repo
+  become: true
 - name: Import GPG Key
   rpm_key:
     state: present
