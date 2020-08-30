@@ -1,0 +1,3 @@
+---
+- name:  Installing Jenkins on AWS EC2
+  hosts: ec2
