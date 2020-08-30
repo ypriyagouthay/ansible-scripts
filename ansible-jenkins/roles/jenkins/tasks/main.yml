@@ -1,29 +1,47 @@
 ---
+# Add Jenkins repository key
+- name: Add jenkins apt-key
+  sudo: yes
+  apt_key: data="{{ lookup('file', 'jenkins-ci.org.key') }}" state=present
 
-- name: Download Jenkins repo yum URL for
-  get_url:
-    url: "{{jenkins.repo_URL}}"
-    dest: /etc/yum.repos.d/jenkins.repo
-  become: true
-- name: Import GPG Key
-  rpm_key:
-    state: present
-    key: "{{jenkins.gpg_key}}"
+# Add Jenkins repository
+- name: Add Jenkins repository
+  sudo: yes
+  apt_repository: repo='{{ jenkins.deb.repo }}' state=present update_cache=yes
 
-- name: Install Jenkins in ec2 instance
-  apt:
-    name: jenkins
-    state: present
+- name: Install dependencies
+  sudo: yes
+  apt: pkg={{ item }} state=installed
+  with_items: jenkins.deb.dependencies
 
-- name: Change Jenkins JAVA options
-  lineinfile:
-    dest=/etc/sysconfig/jenkins
-    regexp=^JENKINS_JAVA_OPTIONS=
-    line=JENKINS_JAVA_OPTIONS="{{jenkins.JAVA_OPTIONS}}"
-  become: true
+# Install Jenkins
+- name: Install Jenkins
+  sudo: yes
+  apt: pkg=jenkins state=latest update_cache=yes cache_valid_time=86400
 
-- name: Start Jenkins service and enable on boot
-  service:
-    name: jenkins
-    state: started
-    enabled: yes
+- name: List plugins
+  sudo: yes
+  action: shell java -jar {{ jenkins.cli_dest }} -s http://localhost:8080 list-plugins | cut -f 1 -d ' '
+  when: plugins is defined
+  register: plugins_installed
+
+# Install/update Jenkins plugins
+- name: Install/update plugins
+  sudo: yes
+  action: command java -jar {{ jenkins.cli_dest }} -s http://localhost:8080 install-plugin {{ item }}
+  when: plugins_installed.changed and plugins_installed.stdout.find('{{ item }}') == -1
+  with_items: plugins
+  notify:
+    - 'Restart Jenkins'
+
+- name: List plugins to be updated
+  sudo: yes
+  action: shell java -jar {{ jenkins.cli_dest }} -s http://localhost:8080 list-plugins | grep ')$' | cut -f 1 -d ' ' | sed ':a;N;$!ba;s/\n/ /g'
+  register: plugins_updates
+
+- name: Update plugins
+  sudo: yes
+  action: command java -jar {{ jenkins.cli_dest }} -s http://localhost:8080 install-plugin {{ plugins_updates.stdout }}
+  when: plugins_updates.stdout != ''
+  notify:
+    - 'Restart Jenkins'
