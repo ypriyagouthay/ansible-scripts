@@ -13,4 +13,8 @@
 
 - name: Install Oracle Java 8
   become: yes
-  apt: name=['oracle-java8-installer', 'ca-certificates', 'oracle-java8-set-default'] state=latest
+  apt: name={{item}} state=latest
+  with_items:
+    - oracle-java8-installer
+    - ca-certificates
+    - oracle-java8-set-default
