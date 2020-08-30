@@ -1,0 +1,1 @@
+ec2 ansible_host=ec2-13-58-149-254.us-east-2.compute.amazonaws.com ansible_user=ubuntu ansible_ssh_private_key_file=/home/priya/ansible.pem
