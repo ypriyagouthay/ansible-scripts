@@ -3,7 +3,7 @@
 - name: Downloading the repo jenkins
   get_url:
     url: http://pkg.jenkins-ci.org/redhat/jenkins.repo
-    dest: /etc/apt.repos.d/jenkins.repo
+    dest: /etc/yum.repos.d/jenkins.repo
   become: true
 
 - name: Imporying the GPG Key
