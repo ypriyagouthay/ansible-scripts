@@ -31,7 +31,7 @@
          key_name: AWS-Ansible
          region: us-east-2
          instance_type: t2.micro
-         image:  ami-06817f01dcc7f30be
+         image:  ami-09a67037138f86e67
          wait: yes
          wait_timeout: 500
          count: 1
