@@ -42,7 +42,7 @@
               volume_type: gp2
               volume_size: 8
          monitoring: yes
-         vpc_subnet_id: subnet-18e7fa93
+         vpc_subnet_id: subnet-75dcb339
          assign_public_ip: yes
          group: Ansible_Security_Group_AWS
       register: ec2
