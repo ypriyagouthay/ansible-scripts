@@ -5,8 +5,7 @@
     - vars.yml
 
   tasks:
-    - name:launch an instance
-      ec2:
+    - name:launch an ec2 instance
         aws_access_key: "{{ aws_access_key }}"
         aws_secret_key: "{{ aws_secret_key }}"
         key_name: ansibleubuntu
