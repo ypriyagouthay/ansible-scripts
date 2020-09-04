@@ -11,7 +11,7 @@
   tasks:
     - name: Launch instance
       ec2:
-         key_name: "{{ linuxec2 }}"
+         key_name: "{{ keypair }}"
          group: "{{ security_group }}"
          instance_type: "{{ t2.micro }}"
          image: "{{  ami-0f4aeaec5b3ce9152 }}"
