@@ -1,5 +1,5 @@
 - name: create ec2 instance
-        ec2:
+  ec2:
           aws_access_key: ""
           aws_secret_key: ""
           image: ami-caaf84af
