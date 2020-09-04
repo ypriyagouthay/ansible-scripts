@@ -2,12 +2,10 @@
   ec2:
           aws_access_key: ""
           aws_secret_key: ""
-          image: ami-caaf84af
+          image: ami-0f4aeaec5b3ce9152
           wait: yes
           instance_type: t2.micro
           group_id: security_group.group_id
           region: us-east-2
-          count_tag:
-            Name: apacheserver
           exact_count: 1
         register: ec2
