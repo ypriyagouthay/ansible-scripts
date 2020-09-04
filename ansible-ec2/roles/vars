@@ -1,0 +1,6 @@
+vars:
+    keypair: ansibleubuntu
+    instance_type: t2.micro
+    security_group: my_securitygroup
+    image:  ami-0f4aeaec5b3ce9152
+    region: us-east-2

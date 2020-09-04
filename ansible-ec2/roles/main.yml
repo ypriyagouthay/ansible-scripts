@@ -1,0 +1,11 @@
+ - name: Launch instance
+      ec2:
+         key_name: "{{ ansibleubuntu }}"
+         group: "{{ security_group }}"
+         instance_type: "{{ t2.micro }}"
+         image: "{{  ami-0f4aeaec5b3ce9152 }}"
+         wait: true
+         region: "{{ us-east-2 }}"
+         vpc_subnet_id: subnet-4ecc0525
+         assign_public_ip: yes
+      register: ec2
