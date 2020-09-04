@@ -1,4 +1,5 @@
- - name: Launch instance
+---
+   - name: Launch instance
       ec2:
          key_name: "{{ ansibleubuntu }}"
          group: "{{ security_group }}"

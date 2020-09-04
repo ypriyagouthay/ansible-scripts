@@ -1,3 +1,4 @@
+---
 - name: Create an EC2 instance
   hosts: localhost
   gather_facts: False
