@@ -3,11 +3,10 @@
   hosts: localhost
   gather_facts: False
   vars:
-    keypair: ansible ubuntu
-    instance_type: t2.micro
-    security_group: my_securitygroup
-    image:  ami-0f4aeaec5b3ce9152
-    region: us-east-2
+  provider:
+   ip_address: '172.31.0.0/16'
+   username: 'goutham'
+   password: 'Vinayaka@123'
   tasks:
     - name: Launch instance
       ec2:
