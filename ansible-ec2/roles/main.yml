@@ -9,7 +9,7 @@
     image:  ami-0f4aeaec5b3ce9152
     region: us-east-2
   tasks:
-  - name: Launch an ec2 instance
+   - name: Launch an ec2 instance
       ec2:
          key_name: "{{ keypair }}"
          group: "{{ security_group }}"
