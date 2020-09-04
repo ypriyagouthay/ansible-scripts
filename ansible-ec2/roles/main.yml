@@ -1,21 +1,13 @@
-
-- name: Create an ec2 instance
-  hosts: localhost
-  gather_facts: false
-  vars:
-    keypair: linuxec2
-    instance_type: t2.micro
-    security_group: my_securitygroup
-    image:  ami-0f4aeaec5b3ce9152
-    region: us-east-2
-  tasks:
-  - name: Launch instance
-    ec2:
-         key_name: "{{ keypair }}"
-         group: "{{ security_group }}"
-         instance_type: "{{ t2.micro }}"
-         image: "{{  ami-0f4aeaec5b3ce9152 }}"
-         wait: true
-         region: "{{ us-east-2 }}"
-         vpc_subnet_id: subnet-4ecc0525
-         assign_public_ip: yes
+- name: create ec2 instance
+        ec2:
+          aws_access_key: ""
+          aws_secret_key: ""
+          image: ami-caaf84af
+          wait: yes
+          instance_type: t2.micro
+          group_id: security_group.group_id
+          region: us-east-2
+          count_tag:
+            Name: apacheserver
+          exact_count: 1
+        register: ec2
