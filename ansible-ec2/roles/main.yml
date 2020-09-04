@@ -3,14 +3,15 @@
   hosts: localhost
   gather_facts: False
   vars:
-  provider:
-   ip_address: '172.31.0.0/16'
-   username: 'goutham'
-   password: 'Vinayaka@123'
+    keypair: linuxec2
+    instance_type: t2.micro
+    security_group: my_securitygroup
+    image:  ami-0f4aeaec5b3ce9152
+    region: us-east-2
   tasks:
     - name: Launch instance
       ec2:
-         key_name: "{{ ansibleubuntu}}"
+         key_name: "{{ linuxec2 }}"
          group: "{{ security_group }}"
          instance_type: "{{ t2.micro }}"
          image: "{{  ami-0f4aeaec5b3ce9152 }}"
